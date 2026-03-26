@@ -3,16 +3,12 @@
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "ical-filter",
-	"main": "worker/index.ts",
-	"compatibility_date": "2025-10-08",
-	"assets": {
-		"directory": "./dist",
-		"not_found_handling": "single-page-application"
-	},
-	"observability": {
-		"enabled": true
-	},
-	"upload_source_maps": true
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ical-filter",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-10-08",
+  "upload_source_maps": true,
+  "observability": {
+    "enabled": true,
+  },
 }

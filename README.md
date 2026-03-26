@@ -1,39 +1,57 @@
-# Cloudflare Workflows Starter Template
+# ical-filter
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/workflows-starter-template)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/edpenz/ical-filter)
 
-<!-- dash-content-start -->
+An iCalendar event filtering service built on Cloudflare Workers, primarily targeted at Microsoft Office public feeds. This service removes events from calendars where the summary/title matches given text patterns. Notably this implementation also works correctly for event recurrences which other similar services struggle on.
 
-A real-time, interactive demonstration of [Cloudflare Workflows](https://developers.cloudflare.com/workflows) with live updates via WebSockets and Durable Objects. This template showcases durable multi-step workflows with time-based delays, event-driven pauses, and real-time status visualization.
+## Usage
 
-<!-- dash-content-end -->
+The service is accessed by composing an appropriate URL consisting of:
 
-![Cloudflare Workflows Starter Template](assets/template-screenshot.png)
+1. The `https://ical-filter.edwardpeek.workers.dev/` base URL (or your own deployed worker URL).
+2. A `url` query parameter pointing to the original iCalendar feed you want to filter.
+3. Some number of `exclude` query parameters (case-insensitive) specifying text patterns to match against.
 
-## Getting Started
+Query parameters will need to be URL-encoded if they contain special characters.
+
+eg.
+
+https://ical-filter.edwardpeek.workers.dev/?exclude=anniversary&url=https://www.officeholidays.com/ics-clean/new-zealand
+
+## Development
 
 ### Installation
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
-Visit `http://localhost:5173` to see the interactive demo.
+Visit http://localhost:5173 to see the interactive demo.
+
+### Testing
+
+```bash
+pnpm run test
+```
+
+Runs the Jest test suite to verify functionality.
 
 ### Deployment
 
 ```bash
-npm run deploy
+pnpm run deploy
 ```
+
+Deploys the worker to Cloudflare.
 
 ## Learn More
 
-- [Cloudflare Workflows Documentation](https://developers.cloudflare.com/workflows)
-- [Durable Objects Documentation](https://developers.cloudflare.com/durable-objects)
 - [Workers Documentation](https://developers.cloudflare.com/workers)
+- [iCalendar RFC 5545](https://tools.ietf.org/rfc/rfc5545.txt)
+- [.ics previewer](https://ics-preview-cloudflare-nextjs.pages.dev/)
