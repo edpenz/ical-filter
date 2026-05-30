@@ -164,3 +164,27 @@ describe('reference data', () => {
     const _output = transformCalendar(input, ['away', 'free'])
   })
 })
+
+describe('reference transform', () => {
+  const inputFilename = 'input.ics'
+  const outputFilename = 'output.ics'
+
+  const filters = ['away', 'free']
+
+  // BYO reference file
+  let maybeSkipIt
+  if (existsSync(inputFilename) && existsSync(outputFilename)) {
+    maybeSkipIt = it
+  } else {
+    maybeSkipIt = it.skip
+  }
+
+  maybeSkipIt('makes expected adjustments', () => {
+    const input = readFileSync(inputFilename, 'utf-8')
+    const output = transformCalendar(input, filters)
+
+    const expectedOutput = readFileSync(outputFilename, 'utf-8')
+
+    expect(output).toBe(expectedOutput)
+  })
+})

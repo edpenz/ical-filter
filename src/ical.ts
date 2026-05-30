@@ -143,8 +143,8 @@ export function transformCalendar(icsString: string, excludePatterns: string[]):
       continue
     }
 
-    // Create exclusion on parent if this is a recurrence
     if (isRecurrence) {
+      // Convert repetition instance to an exclusion on parent if this is a recurrence
       calendar.children.splice(i, 1)
       const uidAttr = child.children.find((attr): attr is ICalAttr => attr.key === 'UID')
       if (!uidAttr) {
@@ -169,11 +169,11 @@ export function transformCalendar(icsString: string, excludePatterns: string[]):
         keyExtra: recurrenceIdAttr.keyExtra,
         value: recurrenceId,
       })
+    } else {
+      // Otherwise remove the event instance entirely
+      calendar.children.splice(i, 1)
+      i--
     }
-
-    // Remove the event instance
-    calendar.children.splice(i, 1)
-    i--
   }
 
   return encodeIcs(calendar)
